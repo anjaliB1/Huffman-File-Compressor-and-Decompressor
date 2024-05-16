@@ -6,20 +6,24 @@
     <title>Encode</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style2.css">
-    <script src="script2.js" defer></script>
+    <script src="encoder.js" defer></script>
 </head>
 <body>
     <header>
-        <h1>Huffman Encoder</h1>
+        <h1>Huffman File Encoder</h1>
     </header>
     <div class="containerbox">
         <div class="textbox">
             <textarea id="textInput" rows="10" cols="50" placeholder="Enter text here..."></textarea>
             <button id="submitText">Submit Text</button>
         </div>
+        <h3>OR</h3>
         <div class="uploadbox">
             <input type="file" id="fileInput" accept=".txt">
             <button id="submitFile">Submit File</button>
+        </div>
+        <div class="backdiv">
+            <button id="back"><span>&#10554;</span></button>
         </div>
     </div>
 </body>

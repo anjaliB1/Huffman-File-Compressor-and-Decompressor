@@ -3,11 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitFileButton = document.getElementById('submitFile');
     const fileInput = document.getElementById('fileInput');
     const textInput = document.getElementById('textInput');
+    const back = document.getElementById('back');
 
     submitTextButton.addEventListener('click', () => {
         const text = textInput.value;
         if (text) {
-            console.log('Submitted text:', text);
+            const compressedText = compressText(text);
+            downloadFile(compressedText);
         } else {
             alert('Please enter some text');
         }
@@ -19,11 +21,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const fileContent = event.target.result;
-                console.log('Submitted file content:', fileContent);
+                const compressedText = compressText(fileContent);
+                downloadFile(compressedText);
             };
             reader.readAsText(file);
         } else {
             alert('Please select a text file');
         }
     });
+
+    back.addEventListener('click', () => {
+        window.history.back();
+    });
+
+    function compressText(text) {
+        return text;
+    }
+
+    function downloadFile(text) {
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'output.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
 });
