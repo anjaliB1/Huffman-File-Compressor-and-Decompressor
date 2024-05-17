@@ -46,7 +46,7 @@ button {
     background-color: #2962ff;
     color: #ffffff;
     cursor: pointer;
-    transition: #f5f6fa 0.3s ease;
+    transition: 0.1s;
 }
 
 button:hover {
@@ -55,4 +55,6 @@ button:hover {
 
 button:active {
     background-color: #0d47a1;
+    transform: translateY(1px);
+    -webkit-transform: scale(1.1);
 }

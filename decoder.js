@@ -34,16 +34,77 @@ document.addEventListener('DOMContentLoaded', () => {
         window.history.back();
     });
 
-    function decompressText(text) {
-        return text;
+    //decompress code starts
+    class Node {
+        constructor(char, left = null, right = null) {
+            this.char = char;
+            this.left = left;
+            this.right = right;
+        }
     }
+
+    function decompressText(text) {
+        const [encodedText, codesString] = text.split('\n\nHuffman Codes:\n');
+        const huffmanCodes = parseHuffmanCodes(codesString);
+        const huffmanTree = buildHuffmanTree(huffmanCodes);
+        const decodedText = decodeText(encodedText, huffmanTree);
+        return decodedText;
+    }
+
+    function parseHuffmanCodes(codesString) {
+        const codes = {};
+        const lines = codesString.split('\n');
+        for (const line of lines) {
+            if (line.trim()) {
+                const [char, code] = line.split(': ');
+                codes[char] = code;
+            }
+        }
+        return codes;
+    }
+
+    function buildHuffmanTree(huffmanCodes) {
+        const root = new Node(null);
+        for (const [char, code] of Object.entries(huffmanCodes)) {
+            let currentNode = root;
+            for (const bit of code) {
+                if (bit === '0') {
+                    if (!currentNode.left) {
+                        currentNode.left = new Node(null);
+                    }
+                    currentNode = currentNode.left;
+                } else {
+                    if (!currentNode.right) {
+                        currentNode.right = new Node(null);
+                    }
+                    currentNode = currentNode.right;
+                }
+            }
+            currentNode.char = char;
+        }
+        return root;
+    }
+
+    function decodeText(encodedText, huffmanTree) {
+        let decodedText = '';
+        let currentNode = huffmanTree;
+        for (const bit of encodedText) {
+            currentNode = bit === '0' ? currentNode.left : currentNode.right;
+            if (currentNode.char !== null) {
+                decodedText += currentNode.char;
+                currentNode = huffmanTree;
+            }
+        }
+        return decodedText;
+    }
+    //decompress code ends
 
     function downloadFile(text) {
         const blob = new Blob([text], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'output.txt';
+        a.download = 'decompressed.txt';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

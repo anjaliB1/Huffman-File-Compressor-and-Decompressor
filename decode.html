@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Huffman File Decoder</title>
+    <title>Huffman File Decompressor</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style2.css">
     <script src="decoder.js" defer></script>
 </head>
 <body>
     <header>
-        <h1>Huffman File Decoder</h1>
+        <h1>Huffman File Decompressor</h1>
     </header>
     <div class="containerbox">
         <div class="textbox">
-            <textarea id="textInput" rows="10" cols="50" placeholder="Enter text here..."></textarea>
+            <textarea id="textInput" rows="10" cols="50" placeholder="Enter the encoded message and huffman codes like the given example:
+            
+101111000
+
+Huffman Codes:
+c: 0
+a: 10
+b: 11
+            "></textarea>
             <button id="submitText">Submit Text</button>
         </div>
         <h3>OR</h3>
